@@ -1,0 +1,209 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Playlist API",
+    "description": "API untuk mengelola playlist lagu",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Kelompok 5",
+      "email": "muhammadainur.22005@mhs.unesa.ac.id",
+      "url": "https://github.com/22091397005MuhammadAinurRofik/tugasAPI1"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/v1",
+      "description": "Development server",
+      "variables": {
+        "environment": {
+          "default": "development",
+          "description": "server environment",
+          "enum": ["development", "staging", "production"]
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/playlist": {
+      "get": {
+        "summary": "Get all playlists",
+        "description": "Get all playlists or a specific playlist by ID",
+        "parameters": [
+          {
+            "name": "id_lagu",
+            "in": "query",
+            "description": "ID of the playlist to retrieve",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Playlist"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new playlist",
+        "description": "Create a new playlist with the provided data",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlaylistInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/playlist/{id_lagu}": {
+      "put": {
+        "summary": "Update a playlist",
+        "description": "Update a playlist with the provided data",
+        "parameters": [
+          {
+            "name": "id_lagu",
+            "in": "path",
+            "description": "ID of the playlist to update",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlaylistInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a playlist",
+        "description": "Delete a playlist by ID",
+        "parameters": [
+          {
+            "name": "id_lagu",
+            "in": "path",
+            "description": "ID of the playlist to delete",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Message"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Playlist": {
+        "type": "object",
+        "properties": {
+          "id_lagu": {
+            "type": "integer"
+          },
+          "judul_lagu": {
+            "type": "string"
+          },
+          "genre_lagu": {
+            "type": "string"
+          },
+          "penyanyi": {
+            "type": "string"
+          },
+          "followers": {
+            "type": "integer"
+          }
+        }
+      },
+      "PlaylistInput": {
+        "type": "object",
+        "properties": {
+          "judul_lagu": {
+            "type": "string"
+          },
+          "genre_lagu": {
+            "type": "string"
+          },
+          "penyanyi": {
+            "type": "string"
+          },
+          "followers": {
+            "type": "integer"
+          }
+        },
+        "required": ["judul_lagu", "genre_lagu", "penyanyi", "followers"]
+      },
+      "Message": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "status_message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

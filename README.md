@@ -1,2 +1,2 @@
 # tugasAPI1
-![Logo](1.png)
+![Logo](image/1.png)
